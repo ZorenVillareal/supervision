@@ -1,6 +1,5 @@
 import copy
 import os
-import random
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, TypeVar
 
@@ -13,6 +12,7 @@ from supervision.detection.utils import (
     filter_polygons_by_area,
     mask_to_polygons,
 )
+import secrets
 
 T = TypeVar("T")
 
@@ -122,10 +122,10 @@ def train_test_split(
         Tuple[List[T], List[T]]: The split data.
     """
     if random_state is not None:
-        random.seed(random_state)
+        secrets.SystemRandom().seed(random_state)
 
     if shuffle:
-        random.shuffle(data)
+        secrets.SystemRandom().shuffle(data)
 
     split_index = int(len(data) * train_ratio)
     return data[:split_index], data[split_index:]
